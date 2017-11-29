@@ -3,16 +3,17 @@
 # main packages needed.
 sudo apt-get --assume-yes install wget htop mytop zsh jq pip
 
-# template files...
-cd /home/vagrant
-wget --no-cookies --no-check-certificate -O .zshrc https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.zshrc
-wget --no-cookies --no-check-certificate -O .my.cnf https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.my.cnf
+sudo apt-get --assume-yes install htop
+sudo apt-get --assume-yes install mytop
+sudo apt-get --assume-yes install zsh
+sudo apt-get --assume-yes install jq
+sudo apt-get --assume-yes install python-pip
+
 
 # Install oh-my-zsh
 git clone https://github.com/Artistan/powerlevel9k.git /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k
 cd /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k; git checkout color_names;
 printf "\nsource ~/.bash_aliases\n" | tee -a /home/vagrant/.zshrc
-chsh -s /usr/bin/zsh vagrant
 
 # pip it out... thefuck you say
 sudo pip install --upgrade pip
@@ -25,9 +26,13 @@ sudo sed -i '' 's/^bind/#bind/' /etc/redis/redis.conf
 # make sure redis will start
 sudo systemctl enable redis.service
 
+# template files...
+cd /home/vagrant
+sudo wget --no-cookies --no-check-certificate -O .zshrc https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.zshrc
+sudo wget --no-cookies --no-check-certificate -O .my.cnf https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.my.cnf
+
 cd /home/vagrant/;
 
-touch 'aftermath'
 # own it.
-chown -R vagrant:vagrant /home/vagrant
+sudo chown -R vagrant:vagrant /home/vagrant
 echo "install complete"

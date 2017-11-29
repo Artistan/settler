@@ -6,20 +6,20 @@ echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee 
 sudo apt-get update
 
 # main packages needed.
-sudo apt-get --assume-yes install wget default-jre htop mytop zsh jq memcached php-memcached elasticsearch pip
+sudo apt-get --assume-yes install default-jre
+sudo apt-get --assume-yes install htop
+sudo apt-get --assume-yes install mytop
+sudo apt-get --assume-yes install zsh
+sudo apt-get --assume-yes install jq
+sudo apt-get --assume-yes install memcached
+sudo apt-get --assume-yes install php-memcached
+sudo apt-get --assume-yes install elasticsearch
+sudo apt-get --assume-yes install python-pip
 
-# template files...
-cd /home/vagrant
-wget --no-cookies --no-check-certificate -O .zshrc https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.zshrc
-wget --no-cookies --no-check-certificate -O .my.cnf https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.my.cnf
-cd /etc/php/7.1/fpm/conf.d/
-wget --no-cookies --no-check-certificate -O 20-xdebug.ini https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/xdebug.ini
-
-# Install oh-my-zsh
+# Install oh-my-zsh theme
 git clone https://github.com/Artistan/powerlevel9k.git /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k
 cd /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k; git checkout color_names;
 printf "\nsource ~/.bash_aliases\n" | tee -a /home/vagrant/.zshrc
-chsh -s /usr/bin/zsh vagrant
 
 # pip it out... thefuck you say
 sudo pip install --upgrade pip
@@ -27,7 +27,7 @@ pip install thefuck
 
 # enable xdebug mod
 sudo phpenmod xdebug;
-dir -p /home/vagrant/Code/xdebug
+mkdir -p /home/vagrant/Code/xdebug
 sudo nginx -s reload
 sudo service php7.1-fpm restart;
 
@@ -45,9 +45,15 @@ sudo systemctl restart elasticsearch
 sudo systemctl enable memcached.service
 sudo systemctl start memcached.service
 
+# template files...
+cd /home/vagrant
+sudo wget --no-cookies --no-check-certificate -O .zshrc https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.zshrc
+sudo wget --no-cookies --no-check-certificate -O .my.cnf https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.my.cnf
+cd /etc/php/7.1/fpm/conf.d/
+sudo wget --no-cookies --no-check-certificate -O 20-xdebug.ini https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/xdebug.ini
+
 cd /home/vagrant/;
 
-touch 'aftermath'
 # own it.
-chown -R vagrant:vagrant /home/vagrant
+sudo chown -R vagrant:vagrant /home/vagrant
 echo "install complete"
