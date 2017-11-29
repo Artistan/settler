@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# add elasticsearch to the apt list
+sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -;
+echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list;
+sudo apt-get update
+
+# main packages needed.
+sudo apt-get --assume-yes install default-jre htop mytop zsh jq memcached php-memcached elasticsearch pip
+
+# template files...
+cp ../templates/template.zshrc /home/vagrant/.zshrc
+cp ../templates/template.my.cnf /home/vagrant/.my.cnf
+sudo cp /vagrant/resources/xdebug.ini /etc/php/7.1/fpm/conf.d/20-xdebug.ini
+
+# Install oh-my-zsh
+git clone https://github.com/Artistan/powerlevel9k.git /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k
+cd /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k; git checkout color_names;
+printf "\nsource ~/.bash_aliases\n" | tee -a /home/vagrant/.zshrc
+chsh -s /usr/bin/zsh vagrant
+
+# pip it out... thefuck you say
+sudo pip install --upgrade pip
+pip install thefuck
+
+# enable xdebug mod
+sudo phpenmod xdebug;
+dir -p ~/Code/xdebug
+sudo nginx -s reload
+sudo service php7.1-fpm restart;
+
+# setup elasticsearch service and cluster.
+sudo systemctl enable elasticsearch.service;
+sudo chmod -R 777 /etc/elasticsearch;
+sudo echo 'cluster.name: Homestead' >> /etc/elasticsearch/elasticsearch.yml;
+sudo echo 'network.host: ["_local_","_site_"]' >> /etc/elasticsearch/elasticsearch.yml;
+sudo echo 'path.repo: "/tmp/repositories"' >> /etc/elasticsearch/elasticsearch.yml;
+sudo chmod 644 /etc/elasticsearch/*;
+sudo chmod 755 /etc/elasticsearch;
+sudo systemctl restart elasticsearch
+
+# make sure memcached will start
+sudo systemctl enable memcached.service
+sudo systemctl start memcached.service
+
+cd /home/vagrant/;
+
+touch 'aftermath'
+# own it.
+chown -R vagrant:vagrant /home/vagrant
+echo "install complete"
