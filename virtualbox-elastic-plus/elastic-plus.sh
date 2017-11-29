@@ -6,12 +6,14 @@ echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee 
 sudo apt-get update
 
 # main packages needed.
-sudo apt-get --assume-yes install default-jre htop mytop zsh jq memcached php-memcached elasticsearch pip
+sudo apt-get --assume-yes install wget default-jre htop mytop zsh jq memcached php-memcached elasticsearch pip
 
 # template files...
-cp ../templates/template.zshrc /home/vagrant/.zshrc
-cp ../templates/template.my.cnf /home/vagrant/.my.cnf
-sudo cp /vagrant/resources/xdebug.ini /etc/php/7.1/fpm/conf.d/20-xdebug.ini
+cd /home/vagrant
+wget --no-cookies --no-check-certificate -O .zshrc https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.zshrc
+wget --no-cookies --no-check-certificate -O .my.cnf https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/template.my.cnf
+cd /etc/php/7.1/fpm/conf.d/
+wget --no-cookies --no-check-certificate -O 20-xdebug.ini https://raw.githubusercontent.com/Artistan/settler/elastic/virtualbox-elastic-plus/templates/xdebug.ini
 
 # Install oh-my-zsh
 git clone https://github.com/Artistan/powerlevel9k.git /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k
@@ -25,7 +27,7 @@ pip install thefuck
 
 # enable xdebug mod
 sudo phpenmod xdebug;
-dir -p ~/Code/xdebug
+dir -p /home/vagrant/Code/xdebug
 sudo nginx -s reload
 sudo service php7.1-fpm restart;
 
