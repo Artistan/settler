@@ -71,7 +71,7 @@ POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker laravel5 dircycle npm rsync thefuck)
+plugins=(git docker laravel5 dircycle npm rsync)
 
 # User configuration
 
