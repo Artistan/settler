@@ -7,19 +7,12 @@ sudo apt-get --assume-yes install htop
 sudo apt-get --assume-yes install mytop
 sudo apt-get --assume-yes install zsh
 sudo apt-get --assume-yes install jq
-sudp apt-get --assume-yes install python3
-sudp apt-get --assume-yes install python3-dev
-sudp apt-get --assume-yes install python3-pip
 
 
 # Install oh-my-zsh
 git clone https://github.com/Artistan/powerlevel9k.git /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k
 cd /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k; git checkout color_names;
 printf "\nsource ~/.bash_aliases\n" | tee -a /home/vagrant/.zshrc
-
-# pip it out... thefuck you say
-sudo pip3 install --upgrade pip3
-pip3 install thefuck
 
 # https://stackoverflow.com/a/37331750/372215 --- allow for external use, the virtualbox can take care of "security" this is just for dev.
 sudo sed -i /etc/redis/redis.conf.original 's/^protected-mode.*/protected-mode no/' /etc/redis/redis.conf
