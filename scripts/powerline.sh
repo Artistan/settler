@@ -1,8 +1,10 @@
 # clone
+cd /tmp/
+
 git clone https://github.com/powerline/fonts.git --depth=1
 # install
 cd fonts
-./install.sh
+sudo ./install.sh
 # clean-up a bit
 cd ..
-rm -rf fonts
+sudo rm -rf fonts

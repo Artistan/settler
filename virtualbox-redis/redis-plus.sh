@@ -2,7 +2,6 @@
 
 # main packages needed.
 sudo apt-get --assume-yes install wget htop mytop zsh jq pip
-sudo ./powerline.sh
 
 # template files...
 cd /home/vagrant
