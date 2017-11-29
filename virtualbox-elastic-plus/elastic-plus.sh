@@ -14,7 +14,10 @@ sudo apt-get --assume-yes install jq
 sudo apt-get --assume-yes install memcached
 sudo apt-get --assume-yes install php-memcached
 sudo apt-get --assume-yes install elasticsearch
-sudo apt-get --assume-yes install python-pip
+sudp apt-get --assume-yes install python3
+sudp apt-get --assume-yes install python3-dev
+sudp apt-get --assume-yes install python3-pip
+
 
 # Install oh-my-zsh theme
 git clone https://github.com/Artistan/powerlevel9k.git /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k
@@ -22,8 +25,8 @@ cd /home/vagrant/.oh-my-zsh/custom/themes/powerlevel9k; git checkout color_names
 printf "\nsource ~/.bash_aliases\n" | tee -a /home/vagrant/.zshrc
 
 # pip it out... thefuck you say
-sudo pip install --upgrade pip
-pip install thefuck
+sudo pip3 install --upgrade pip3
+pip3 install thefuck
 
 # enable xdebug mod
 sudo phpenmod xdebug;
