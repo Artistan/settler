@@ -1,8 +1,13 @@
 
+# One last upgrade check
+
+apt-get -y upgrade
+
 # Clean Up
 
 apt-get -y autoremove
 apt-get -y clean
+chown -R vagrant:vagrant /home/vagrant
 
 # Enable Swap Memory
 
@@ -10,9 +15,5 @@ apt-get -y clean
 /sbin/mkswap /var/swap.1
 /sbin/swapon /var/swap.1
 
-# Minimize The Disk Image
-
-echo "Minimizing disk image..."
-dd if=/dev/zero of=/EMPTY bs=1M
-rm -f /EMPTY
-sync
+apt-get -y autoremove;
+apt-get -y clean;

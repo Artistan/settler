@@ -88,7 +88,7 @@ php5.6-imap php5.6-mysql php5.6-mbstring \
 php5.6-xml php5.6-zip php5.6-bcmath php5.6-soap \
 php5.6-intl php5.6-readline php5.6-mcrypt
 
-update-alternatives --set php /usr/bin/php7.1
+update-alternatives --set php /usr/bin/php7.2
 
 # Install Composer
 
@@ -328,7 +328,7 @@ apt-get install -y postgresql
 # Configure Postgres Remote Access
 
 sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.5/main/postgresql.conf
-echo "host    all             all             10.0.2.2/32               md5" | tee -a /etc/postgresql/9.5/main/pg_hba.conf
+sed -i "s/peer/md5" /etc/postgresql/9.5/main/pg_hba.conf
 sudo -u postgres psql -c "CREATE ROLE homestead LOGIN UNENCRYPTED PASSWORD 'secret' SUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;"
 sudo -u postgres /usr/bin/createdb --echo --owner=homestead homestead
 service postgresql restart
@@ -400,6 +400,7 @@ chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 # Install oh-my-zsh
+
 git clone git://github.com/robbyrussell/oh-my-zsh.git /home/vagrant/.oh-my-zsh
 cp /home/vagrant/.oh-my-zsh/templates/zshrc.zsh-template /home/vagrant/.zshrc
 printf "\nsource ~/.bash_aliases\n" | tee -a /home/vagrant/.zshrc
